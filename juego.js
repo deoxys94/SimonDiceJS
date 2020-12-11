@@ -103,8 +103,17 @@ class Juego
 
     iluminarColor(color)
     {
+        const archivoAudio = document.getElementById(`audio-${color}`);
+
+        archivoAudio.currentTime = 0;
+        archivoAudio.play();
+
         this.colores[color].classList.add('light');
-        setTimeout(() => this.apagarColor(color), 350)
+
+        archivoAudio.addEventListener('ended', () =>
+        {
+            this.apagarColor(color);
+        });
     }
 
     apagarColor(color)

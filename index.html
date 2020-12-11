@@ -4,16 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.css" integrity="sha256-67AR2JVjhMZCLVxapLuBSMap5RrXbksv4vlllenHBSE=" crossorigin="anonymous">
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-    <div class="gameboard">
-        <div id="azul" class="color azul izquierda" data-color="azul"></div>
-        <div id="morado" class="color morado derecha" data-color="morado"></div>
-        <div id="naranja" class="color naranja izquierda" data-color="naranja"></div>
-        <div id="verde" class="color verde derecha" data-color="verde"></div>
-        <button id="botonEmpezar" class="btn-start">Empezar</button>
-    </div>
+
+    <section class="">
+        <div class="columns">
+            <div class="column is-one-quarter notification is-link pt-6 pl-6">
+                <h2 class="title">Tu puntaje</h2>
+                <button id="botonEmpezar" class="is-large button is-link is-inverted is-outlined">Empezar</button>
+            </div>
+            <div class="column pt-6">
+                <div class="gameboard">
+                    <div id="azul" class="color azul izquierda" data-color="azul"></div>
+                    <div id="morado" class="color morado derecha" data-color="morado"></div>
+                    <div id="naranja" class="color naranja izquierda" data-color="naranja"></div>
+                    <div id="verde" class="color verde derecha" data-color="verde"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <audio src="/sonidos/simonSound1.mp3" id="audio-azul"></audio>
+    <audio src="/sonidos/simonSound2.mp3" id="audio-morado"></audio>
+    <audio src="/sonidos/simonSound3.mp3" id="audio-naranja"></audio>
+    <audio src="/sonidos/simonSound4.mp3" id="audio-verde"></audio>
+    <audio src="/sonidos/error.wav" id="error"></audio>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.12.4/dist/sweetalert2.all.min.js" integrity="sha256-ZRWH0Wx0GVGDUFw4yx1NEG+KiX9OmQTSLn5gpAon8bM=" crossorigin="anonymous"></script>
     <script src="juego.js"></script>
