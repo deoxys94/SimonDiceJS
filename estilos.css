@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .gameboard {
+    height: 100vh;
+    width: 100vh;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    max-height: 60vh;
+    max-width: 60vh;
+  }
+
+  .color {
+    width: 50%;
+    height: 50%;
+    display: inline-block;
+  }
+
+  .izquierda {
+    float: left;
+  }
+
+  .derecha {
+    float: left;
+  }
+
+  .azul {
+    background: #3273dc;
+  }
+
+  .azul.light {
+    background: #99b9ee;
+  }
+
+  .morado {
+    background: #f14668;
+  }
+
+  .morado.light {
+    background: #f8a3b4;
+  }
+
+  .naranja {
+    background: #ffdd57;
+  }
+
+  .naranja.light {
+    background: #ffeeab;
+  }
+
+  .verde {
+    background: #48c774;
+  }
+
+  .verde.light {
+    background: #a4e3ba;
+  }
+
+  .btn-start {
+    width: 400px;
+    height: 100px;
+  
+    font-family: inherit;
+    font-size: 2.5rem;
+    padding: 0.5em 1em;
+    color: #ffffff;
+    border: none rgba(0, 0, 0, 0);
+    background-color: #66e3d1;
+    text-decoration: none;
+    border-radius: 4px;
+
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 200px);
+  }
+
+  .btn-start-hover,
+  .btn-start:hover,
+  .btn-start:focus {
+      background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.10));
+  }
+
+  .hide {
+    display: none;
+  }
