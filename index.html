@@ -12,8 +12,16 @@
     <section class="">
         <div class="columns">
             <div class="column is-one-quarter notification is-link pt-6 pl-6">
-                <h2 class="title">Tu puntaje</h2>
-                <button id="botonEmpezar" class="is-large button is-link is-inverted is-outlined">Empezar</button>
+                <p class="title">¡Simon dice!</p>
+                <div class="column">
+                    <div class="container hide" id="contenedorPuntaje">
+                        <p class="title">Tu puntaje</p>
+                        <p class="subtitle" id="mostrarPuntaje"></p>   
+                    </div>
+                    <div class="container" id="botonPreparativos">
+                        <button class="is-large button is-link is-inverted is-outlined mt-6">Iniciar juego</button>
+                    </div>
+                </div>
             </div>
             <div class="column pt-6">
                 <div class="gameboard">
@@ -31,7 +39,36 @@
     <audio src="/sonidos/simonSound2.mp3" id="audio-morado"></audio>
     <audio src="/sonidos/simonSound3.mp3" id="audio-naranja"></audio>
     <audio src="/sonidos/simonSound4.mp3" id="audio-verde"></audio>
-    <audio src="/sonidos/error.wav" id="error"></audio>
+    <audio src="/sonidos/error.wav" id="audio-error"></audio>
+
+    <div class="modal" id="modalSelectorNivel">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Selecciona una dificultad</p>
+            </header>
+            <section class="modal-card-body">
+                
+                <div class="tabs is-toggle">
+                    <ul>
+                        <li id="selectorFacil"><a>Fácil</a></li>
+                        <li id="selectorNormal"><a>Normal</a></li>
+                        <li id="selectorHeroico"><a>Heróico</a></li>
+                        <li id="selectorLegendario"><a>Legendario</a></li>
+                    </ul>
+                </div>
+
+                <div class="content" id="explicacionNivel">
+                    
+                </div>
+
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success" id="botonEmpezar">¡Jugar!</button>
+                <button class="button" id="botonCancelar">Cancel</button>
+            </footer>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.12.4/dist/sweetalert2.all.min.js" integrity="sha256-ZRWH0Wx0GVGDUFw4yx1NEG+KiX9OmQTSLn5gpAon8bM=" crossorigin="anonymous"></script>
     <script src="juego.js"></script>

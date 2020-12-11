@@ -5,8 +5,28 @@ const botonMorado = document.getElementById('morado');
 const botonNaranja = document.getElementById('naranja');
 const botonVerde = document.getElementById('verde');
 const botonEmpezar = document.getElementById('botonEmpezar');
-const ultimoNivel = 10;
+const puntaje = document.getElementById('mostrarPuntaje');
+const contenedorPuntaje = document.getElementById('contenedorPuntaje');
+const explicacionNivel = document.getElementById('explicacionNivel');
+const selectorFacil = document.getElementById('selectorFacil');
+const selectorNormal = document.getElementById('selectorNormal');
+const selectorHeroico = document.getElementById('selectorHeroico');
+const selectorLegendario = document.getElementById('selectorLegendario');
+const botonPreparativos = document.getElementById('botonPreparativos');
+const modalSelectorNivel = document.getElementById('modalSelectorNivel');
+const botonCancelar = document.getElementById('botonCancelar');
+let esInputUsuario;
+let ultimoNivel;
+let dificultad = "selectorFacil";
+let velocidadReproduccion;
 let juego;
+let stringsExplicacion = 
+{
+    "explicacionFacil": "El juego contiene 10 niveles. La velocidad a la que cambian los colores es lenta.",
+    "explicacionNormal": "El juego contiene 15 niveles. La velocidad a la que cambian los colores es normal",
+    "explicacionHeroico": "El juego contiene 30 niveles. La velocidad a la que cambian los colores es rápida",
+    "explicacionLegendario": "El juego contiene niveles ilimitados. La velocidad a la que cambian los colores es rápida"
+}
 
 class Juego 
 {
@@ -22,6 +42,7 @@ class Juego
 
     iniciarJuego()
     {
+        puntaje.innerHTML = "";
         //#region Inicializar
 
         // Hacer que el puntero this sea lo mismo dentro de toda la clase
@@ -42,9 +63,14 @@ class Juego
     estadoBotonEmpezar()
     {
         if(botonEmpezar.classList.contains('hide'))
-            botonEmpezar.classList.remove('hide');
+            botonPreparativos.classList.remove('hide');
         else
-            botonEmpezar.classList.add('hide');
+            botonPreparativos.classList.add('hide');
+
+        if(contenedorPuntaje.classList.contains('hide'))
+            contenedorPuntaje.classList.remove('hide');
+        else
+            contenedorPuntaje.classList.add('hide');
     }
 
     // Generar la secuencia de números necesaria para el juego
@@ -55,6 +81,7 @@ class Juego
 
     siguienteNivel()
     {
+        puntaje.innerHTML = this.nivel - 1;
         this.subNivel = 0; // Variable necesaria para "recordar" el input del usuario
         this.iluminarSecuencia();
         this.inputUsuario();
@@ -106,6 +133,12 @@ class Juego
         const archivoAudio = document.getElementById(`audio-${color}`);
 
         archivoAudio.currentTime = 0;
+        
+        if(!esInputUsuario)
+            archivoAudio.playbackRate = velocidadReproduccion;
+        else
+            archivoAudio.playbackRate = 1;
+
         archivoAudio.play();
 
         this.colores[color].classList.add('light');
@@ -153,6 +186,11 @@ class Juego
 
     perdioJuego()
     {
+        const archivoAudio = document.getElementById("audio-error");
+
+        archivoAudio.currentTime = 0;
+        archivoAudio.play();
+
         Swal.fire(
             'Oh no!!',
             'Has perdido. Buena suerte para la próxima.',
@@ -181,7 +219,10 @@ class Juego
     {
         let nombreColor = e.target.dataset.color;
         let numeroColor = this.colorANumero(nombreColor);
+        
+        esInputUsuario = true;
         this.iluminarColor(nombreColor);
+        esInputUsuario = false;
 
         if(numeroColor === this.secuencia[this.subNivel])
         {
@@ -210,13 +251,112 @@ class Juego
     }
 }
 
+function mostrarModal()
+{
+    modalSelectorNivel.classList.add('is-active');
+    selectorFacil.classList.add('is-active');
+    explicacionNivel.innerHTML = stringsExplicacion.explicacionFacil;
+}
+
+
+function mostrarExplicaciones()
+{
+    dificultad = this.id;
+
+    console.log(dificultad);
+    console.log(typeof dificultad);
+
+    switch (this.id) 
+    {
+        case "selectorFacil":
+            if(selectorFacil.classList.contains('is-active'))
+                return;
+
+            selectorFacil.classList.add('is-active');
+            selectorNormal.classList.remove('is-active');
+            selectorHeroico.classList.remove('is-active');
+            selectorLegendario.classList.remove('is-active');
+            explicacionNivel.innerHTML = stringsExplicacion.explicacionFacil;
+
+            break;
+        case "selectorNormal":
+            if(selectorNormal.classList.contains('is-active'))
+                return;
+
+            selectorFacil.classList.remove('is-active');
+            selectorNormal.classList.add('is-active');
+            selectorHeroico.classList.remove('is-active');
+            selectorLegendario.classList.remove('is-active');
+            explicacionNivel.innerHTML = stringsExplicacion.explicacionNormal;
+
+            break;
+        case "selectorHeroico":
+            if(selectorHeroico.classList.contains('is-active'))
+                return;
+
+            selectorFacil.classList.remove('is-active');
+            selectorNormal.classList.remove('is-active');
+            selectorHeroico.classList.add('is-active');
+            selectorLegendario.classList.remove('is-active');
+            explicacionNivel.innerHTML = stringsExplicacion.explicacionHeroico;
+
+            break;
+        case "selectorLegendario":
+            if(selectorLegendario.classList.contains('is-active'))
+                return;
+
+            selectorFacil.classList.remove('is-active');
+            selectorNormal.classList.remove('is-active');
+            selectorHeroico.classList.remove('is-active');
+            selectorLegendario.classList.add('is-active');
+            explicacionNivel.innerHTML = stringsExplicacion.explicacionLegendario;
+
+            break;
+    }
+}
+
+function cerrarModal()
+{
+    modalSelectorNivel.classList.remove('is-active');
+    selectorFacil.classList.remove('is-active');
+    explicacionNivel.innerHTML = "";
+}
+
 function empezarJuego()
 {
+    switch (dificultad) 
+    {
+        case "selectorFacil":
+            ultimoNivel = 10;
+            velocidadReproduccion = 0.5;
+            break;
+        case "selectorNormal":
+            ultimoNivel = 15;
+            velocidadReproduccion = 1;
+            break;
+        case "selectorHeroico":
+            ultimoNivel = 30;
+            velocidadReproduccion = 1.5;
+            break;
+        case "selectorLegendario":
+            ultimoNivel = 100000;
+            velocidadReproduccion = 3;
+            break;
+    }
+
+    cerrarModal();
+
     juego = new Juego();
 }
 
 //#region Event listeners
 
+botonPreparativos.addEventListener('click', mostrarModal);
+selectorFacil.addEventListener('click', mostrarExplicaciones);
+selectorNormal.addEventListener('click', mostrarExplicaciones);
+selectorHeroico.addEventListener('click', mostrarExplicaciones);
+selectorLegendario.addEventListener('click', mostrarExplicaciones);
 botonEmpezar.addEventListener("click", empezarJuego);
+botonCancelar.addEventListener('click', cerrarModal);
 
 //#endregion    
